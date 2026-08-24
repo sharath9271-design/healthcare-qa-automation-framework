@@ -1,0 +1,77 @@
+{
+  "config": { "rootDir": "/repo" },
+  "suites": [
+    {
+      "title": "healing.spec.ts",
+      "file": "tests/ui/healing.spec.ts",
+      "specs": [],
+      "suites": [
+        {
+          "title": "Self-healing locators",
+          "specs": [
+            {
+              "title": "recovers from stale data-testids via label/role fallbacks and logs in",
+              "file": "tests/ui/healing.spec.ts",
+              "ok": true,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "results": [
+                    { "status": "passed" }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "throws a clear error when no strategy resolves",
+              "file": "tests/ui/healing.spec.ts",
+              "ok": false,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "status": "timedOut",
+                      "errors": [
+                        {
+                          "message": "Timeout 30000ms exceeded while waiting for locator('button:has-text(\"Definitely Not On This Page\")') to resolve."
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "appointments.spec.ts",
+      "file": "tests/ui/appointments.spec.ts",
+      "specs": [
+        {
+          "title": "booking with a missing reason is rejected",
+          "file": "tests/ui/appointments.spec.ts",
+          "ok": false,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "results": [
+                {
+                  "status": "failed",
+                  "errors": [
+                    {
+                      "message": "Error: strict mode violation: getByTestId('book-btn') resolved to 2 elements"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "suites": []
+    }
+  ]
+}
