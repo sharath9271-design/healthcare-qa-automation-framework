@@ -1,0 +1,23 @@
+{
+  "valid_patient_template": {
+    "resourceType": "Patient",
+    "active": true,
+    "name": [
+      { "use": "official", "family": "__FAMILY__", "given": ["Taylor"] }
+    ],
+    "gender": "unknown",
+    "birthDate": "1990-06-15",
+    "address": [
+      { "use": "home", "city": "Springfield", "state": "IL", "country": "US" }
+    ]
+  },
+  "missing_resource_type": {
+    "active": true,
+    "name": [{ "family": "NoResourceType", "given": ["Test"] }]
+  },
+  "invalid_birth_date": {
+    "resourceType": "Patient",
+    "name": [{ "family": "BadDate", "given": ["Test"] }],
+    "birthDate": "not-a-date"
+  }
+}
