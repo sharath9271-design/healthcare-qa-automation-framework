@@ -1,0 +1,10 @@
+node_modules/
+playwright-report/
+test-results/
+.cache/
+*.pyc
+__pycache__/
+.pytest_cache/
+report.html
+.env
+.DS_Store
