@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>MedPortal — Patient Access</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">MedPortal</div>
+    <nav id="nav-logged-in" class="hidden">
+      <span id="welcome-text" data-testid="welcome-text"></span>
+      <button id="logout-btn" data-testid="logout-btn">Log out</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- LOGIN VIEW -->
+    <section id="login-view" class="card">
+      <h1>Sign in to your account</h1>
+      <p class="hint">Demo credentials: <code>patient@example.com</code> / <code>Patient123!</code></p>
+      <form id="login-form" novalidate>
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" data-testid="email-input" autocomplete="username" required />
+
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" data-testid="password-input" autocomplete="current-password" required />
+
+        <button id="login-btn" type="submit" data-testid="login-btn">Sign in</button>
+        <p id="login-error" class="error hidden" data-testid="login-error" role="alert"></p>
+      </form>
+    </section>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboard-view" class="card hidden">
+      <h1>Your appointments</h1>
+      <ul id="appointments-list" data-testid="appointments-list"></ul>
+
+      <h2>Book a new appointment</h2>
+      <form id="booking-form" novalidate>
+        <label for="doctor">Doctor</label>
+        <select id="doctor" name="doctor" data-testid="doctor-select" required>
+          <option value="">Select a doctor</option>
+          <option value="Dr. Amara Osei — Cardiology">Dr. Amara Osei — Cardiology</option>
+          <option value="Dr. Liam Chen — Dermatology">Dr. Liam Chen — Dermatology</option>
+          <option value="Dr. Priya Nair — General Practice">Dr. Priya Nair — General Practice</option>
+        </select>
+
+        <label for="appointment-date">Date</label>
+        <input id="appointment-date" name="date" type="date" data-testid="date-input" required />
+
+        <label for="reason">Reason for visit</label>
+        <textarea id="reason" name="reason" data-testid="reason-input" required></textarea>
+
+        <button id="book-btn" type="submit" data-testid="book-btn">Book appointment</button>
+        <p id="booking-error" class="error hidden" data-testid="booking-error" role="alert"></p>
+        <p id="booking-confirmation" class="success hidden" data-testid="booking-confirmation" role="status"></p>
+      </form>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

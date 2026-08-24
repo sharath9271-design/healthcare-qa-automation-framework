@@ -1,0 +1,94 @@
+:root {
+  --ink: #1c2430;
+  --muted: #5b6572;
+  --accent: #2f6fed;
+  --danger: #c0392b;
+  --success: #1a7a52;
+  --border: #dbe1e8;
+  --paper: #f5f7fa;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: #fff;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand { font-weight: 700; font-size: 20px; color: var(--accent); }
+
+#nav-logged-in { display: flex; align-items: center; gap: 16px; }
+
+main { max-width: 560px; margin: 40px auto; padding: 0 16px; }
+
+.card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 32px;
+}
+
+h1 { font-size: 22px; margin: 0 0 8px; }
+h2 { font-size: 17px; margin: 28px 0 12px; }
+
+.hint { color: var(--muted); font-size: 13px; }
+.hint code { background: var(--paper); padding: 2px 6px; border-radius: 4px; }
+
+form { display: flex; flex-direction: column; gap: 6px; }
+
+label { font-size: 13px; font-weight: 600; margin-top: 10px; }
+
+input, select, textarea {
+  padding: 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+textarea { min-height: 64px; resize: vertical; }
+
+button {
+  margin-top: 16px;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button:hover { opacity: 0.92; }
+
+#logout-btn {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  margin-top: 0;
+}
+
+.error { color: var(--danger); font-size: 13px; }
+.success { color: var(--success); font-size: 13px; }
+.hidden { display: none !important; }
+
+#appointments-list { list-style: none; padding: 0; margin: 0; }
+
+#appointments-list li {
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
