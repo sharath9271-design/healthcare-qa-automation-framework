@@ -31,6 +31,20 @@ jobs:
       - name: Run UI suite (sharded)
         run: npx playwright test --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
+      - uses: actions/setup-python@v5
+        if: always()
+        with:
+          python-version: "3.12"
+
+      - name: Generate AI-assisted failure-triage report
+        # Always runs (even on a green shard, where it just says so) so a
+        # report always exists to upload/comment. No ANTHROPIC_API_KEY is
+        # configured in this repo's CI, so this always exercises the
+        # heuristic fallback path in scripts/triage_failure.py - the LLM
+        # tier only activates when a real key is provided.
+        if: always()
+        run: python3 scripts/triage_failure.py --input playwright-report/results.json --output triage-report.md
+
       - name: Upload Playwright report
         if: always()
         uses: actions/upload-artifact@v4
@@ -38,6 +52,30 @@ jobs:
           name: playwright-report-shard-${{ matrix.shard }}
           path: playwright-report/
           retention-days: 14
+
+      - name: Upload failure-triage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: triage-report-shard-${{ matrix.shard }}
+          path: triage-report.md
+          retention-days: 14
+
+      - name: Post triage summary on the pull request
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            if (!fs.existsSync('triage-report.md')) return;
+            const body = fs.readFileSync('triage-report.md', 'utf8');
+            if (body.includes('All tests passed')) return; // nothing worth commenting
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `### Failure triage — UI shard ${{ matrix.shard }}\n\n${body}`,
+            });
 
   api-tests:
     name: API tests
@@ -53,8 +91,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run API suite
-        run: pytest tests/api --html=report.html --self-contained-html
+      - name: Run API + triage-script test suite
+        run: pytest tests/api scripts --html=report.html --self-contained-html
 
       - name: Upload API test report
         if: always()
